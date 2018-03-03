@@ -62,32 +62,47 @@ for i in range(29):
         oo_Year_Gender.drop([i], axis=0, inplace=True)
         print "Hello"
 
+print oo_Year_Gender[['Year', 'Women']]
+source1 = ColumnDataSource(oo_Year_Gender[['Year', 'Women']])
+source2 = ColumnDataSource(oo_Year_Gender[['Year', 'Men']])
+hover1 = HoverTool(
+    tooltips=[
+        #( 'City','@City'),
+        ( 'Year','@Year'),
+        ( 'Medal Count','@Women')],)
+hover2 = HoverTool(
+    tooltips=[
+        #( 'City','@City'),
+        ( 'Year','@Year'),
+        ( 'Medal Count','@Men')],)
 
 x = oo_Year_Gender.Year
 y1 = oo_Year_Gender.Women#(columns=["Women"])
 y2 = oo_Year_Gender.Men#(columns=['Men'])
 
 #Data Stuff
-TOOLS = [ HoverTool()]
-p = figure(plot_width=600, plot_height=600, title="Overall Medal Count by Gender", tools=TOOLS)# , x_range=Range1d(1896, 2008))#, x_range=yrs,)  #x_range = x,
+#TOOLS = [ HoverTool()]
+p = figure(tools=[hover1, hover2], x_range=[1895, 2009], y_range=[-10, 1300], x_axis_label='Year', y_axis_label='Medal Count',  #"pan,box_zoom,reset,save,hover"
+            title="Overall Medal Count by Gender")
 p.line(x, y1, line_width=3, color = "navy", alpha=0.3, legend="Womens Medal Count")
 p.line(x, y2, line_width=3, color = "green", alpha=0.3, legend="Mens Medal Count")
-p.circle(x, y1, color='navy', fill_color="white", size=6, legend="Womens Medal Count")
-p.circle(x, y2, color='green', fill_color="white", size=6, legend="Mens Medal Count")
-p.patch(x=[1915.4, 1915.4, 1916.6, 1916.6], y=[0, 1300, 1300, 0], color='black', alpha=0.5)
-p.patch(x=[1939.4, 1939.4, 1944.6, 1944.6], y=[0, 1300, 1300, 0], color='black', alpha=0.5)
+p.circle(x, y1, source=source1, color='navy', fill_color="white", size=6, legend="Womens Medal Count")
+p.circle(x, y2, source=source2, color='green', fill_color="white", size=6, legend="Mens Medal Count")
+p.patch(x=[1915, 1915, 1917, 1917], y=[-10, 1300, 1300, -10], color='black', alpha=0.2)
+p.patch(x=[1939, 1939, 1945, 1945], y=[-10, 1300, 1300, -10], color='black', alpha=0.2)
+#p.patch(x=[1915.4, 1915.4, 1916.6, 1916.6], y=[-10, 1300, 1300, -10], color='black', alpha=0.2)
+#p.patch(x=[1939.4, 1939.4, 1944.6, 1944.6], y=[-10, 1300, 1300, -10], color='black', alpha=0.2)
 #Text Stuff
 #p.title.text_font_size = '25px'
-p.xaxis.axis_label = 'Year'
 #p.xaxis.axis_label = '*data for the years of '
-p.yaxis.axis_label = 'Medal Count'
 
+output_file("olympicdata.html")
+show(p)
 
 # p.select_one(HoverTool).tooltips = [
 #      ('Women', '@Women'),
 #      ('Men', '@Men'),
 # ]
-
 
 # source = ColumnDataSource(
 #         data=dict(
@@ -104,10 +119,6 @@ p.yaxis.axis_label = 'Medal Count'
 #     # add to this
 #     ("(x,y)", "($x, $y)"),
 # ]
-
-output_file("olympicdata.html")
-show(p)
-
 
 
 
