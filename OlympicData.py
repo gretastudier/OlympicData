@@ -1,6 +1,6 @@
 import pandas as pd
 from bokeh.plotting import figure, output_file, show, ColumnDataSource
-from bokeh.charts import Donut, show, output_file, TimeSeries
+#from bokeh.charts import Donut, show, output_file, TimeSeries
 from bokeh.models import HoverTool, BoxSelectTool
 from bokeh.palettes import Spectral5
 
@@ -55,14 +55,24 @@ yrs = oo_Year_Gender.Year
 yrs=yrs.apply(str)
 yrs = yrs.tolist()
 print yrs
-#print yrs.apply(str)
 
 for i in range(29):
-    if oo_Year_Gender.loc[i, 'Men'] == 0:
+    if (oo_Year_Gender.loc[i, 'Men'] == 0):# & (oo_Year_Gender.loc[i, 'Women'] == 0):
+        #nan = float('nan')
+        #oo_Year_Gender.loc[i, 'Men'] == nan
         oo_Year_Gender.drop([i], axis=0, inplace=True)
-        print "Hello"
+        print 'Mennnnn'
+        #print  oo_Year_Gender.head()
 
-print oo_Year_Gender[['Year', 'Women']]
+# for i in range(29):                              #for Women's data = 0
+#     if oo_Year_Gender.loc[i, 'Women'] == 0:
+#         #nan = float('nan')
+#         #oo_Year_Gender.loc[i, 'Women'] == nan
+#         oo_Year_Gender.drop([i], axis=0, inplace=True)
+#         print'Womennnnn'
+#         #print oo_Year_Gender.head()
+
+#print oo_Year_Gender[['Year', 'Women']]
 source1 = ColumnDataSource(oo_Year_Gender[['Year', 'Women']])
 source2 = ColumnDataSource(oo_Year_Gender[['Year', 'Men']])
 hover1 = HoverTool(
