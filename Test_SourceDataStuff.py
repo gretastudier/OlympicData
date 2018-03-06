@@ -44,52 +44,53 @@ print oo_Year_Gender.head()
 
 #Graph
 from bokeh.plotting import ColumnDataSource, figure, show, output_file
-from bokeh.models import BoxSelectTool, ColumnDataSource, HoverTool,  CDSView, IndexFilter, Title, Label
+from bokeh.models import BoxSelectTool, ColumnDataSource, HoverTool
 
+data_source = ColumnDataSource(data=oo_Year_Gender)
 #Years String
-# yrs = oo_Year_Gender.Year
-# yrs=yrs.apply(str)
-# yrs = yrs.tolist()
+yrs = oo_Year_Gender.Year
+yrs=yrs.apply(str)
+yrs = yrs.tolist()
 x = oo_Year_Gender.Year   #x data: years
+
+
 
 #Figure Stuff
 p = figure(x_range=[1895, 2009], y_range=[-10, 1300], x_axis_label='Year', y_axis_label='Medal Count',  #"pan,box_zoom,reset,save,hover"
             title="Total Medal Count by Gender per Year")
-
-#Filter Data for World War cancellation
-view = CDSView(filters=[IndexFilter([0,1,2,3,4,6,7,8,9,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28])])
-patch1 =p.patch(x=[1912, 1912, 1920, 1920], y=[-10, 1300, 1300, -10], color='black', alpha=0.04, line_width=0)
-patch2 = p.patch(x=[1936, 1936, 1948, 1948], y=[-10, 1300, 1300, -10], color='black', alpha=0.04, line_width=0)
-p.add_tools(HoverTool(renderers=[patch1], tooltips=[("Year", "@x"),
-                                                    ("Cancellation", "World War 1"),]))
-
+p.title.text_font_size = '20px'
 #Women
-y = oo_Year_Gender.Women
-p.line(x=x, y=y, line_width=3, color = "navy", alpha=0.4, legend="Womens Medal Count", view=view)
-c1 = p.circle(x=x, y=y, color='navy', fill_color="white", size=6, legend="Womens Medal Count", view=view)
-p.add_tools(HoverTool(renderers=[c1], tooltips=[("Years", "@x"),
-                                                 ("Women", "@y"),]))
-# #Men
-y = oo_Year_Gender.Men
-p.line(x=x, y=y,  line_width=3, color = "green", alpha=0.4, legend="Mens Medal Count", view=view)
-c2 = p.circle(x=x, y=y,  color='green', fill_color="white", size=6, legend="Mens Medal Count", view=view)
-p.add_tools(HoverTool(renderers=[c2], tooltips=[("Years", "@x"),
-                                                ("Men", "@y"),]))
+#y = oo_Year_Gender.Women
 
-#Grid and Labels
+# t1 = x[0:5]
+# t2 = x[6:11]
+# t3 = x[13:28]
+# y1 = y[0:5]
+# y2 = y[6:11]
+# y3 = y[13:28]
+# print t1, y1
+# nan=float('nan')
+# print nan
+
+#p.line(x=x, y=[[t1, t2, t3 ],[y1, y2, y3]],  line_width=3, color = "navy", alpha=0.3, legend="Womens Medal Count")
+p.line(x='Years', y='Women', line_width=3, color = "navy", alpha=0.3, legend="Womens Medal Count", source=data_source)
+
+c1 = p.circle(x='Years', y='Women', color='navy', fill_color="white", size=6, legend="Womens Medal Count", source=data_source)
+# p.add_tools(HoverTool(renderers=[c1], tooltips=[("Years", "@x"),
+#                                                  ("Women", "@y"),]))
+# #Men
+# y = oo_Year_Gender.Men
+# p.line(x=x, y=y,  line_width=3, color = "green", alpha=0.3, legend="Mens Medal Count")
+# c2 = p.circle(x=x, y=y,  color='green', fill_color="white", size=6, legend="Mens Medal Count")
+# p.add_tools(HoverTool(renderers=[c2], tooltips=[("Years", "@x"),
+#                                                 ("Men", "@y"),]))
+p.patch(x=[1915, 1915, 1917, 1917], y=[-10, 1300, 1300, -10], color='black', alpha=0.2, line_width=0)
+p.patch(x=[1939, 1939, 1945, 1945], y=[-10, 1300, 1300, -10], color='black', alpha=0.2, line_width=0)
+
+#Grid Color
 p.grid.grid_line_color = "white"
 p.background_fill_color = "#e2ddd5"
-p.background_fill_alpha = 0.3
-p.title.text_font_size = '20px'
-p.add_layout(Title(text="The 1916, 1940, and 1944 Olympic Games were canceled due to World War I and II.", align="center"), "above")
-
-#Add Label to WW blocks:
-# citation1 = Label(x=60, y=110, x_units='screen', y_units='screen', text_font_size = '15px',
-#                  text='World War I', render_mode='css', text_alpha=0.7)
-# citation2 = Label(x=180, y=150, x_units='screen', y_units='screen', text_font_size = '15px',
-#                  text='World War II', render_mode='css', text_alpha=0.7)
-# p.add_layout(citation1)
-# p.add_layout(citation2)
+p.background_fill_alpha = 0.4
 
 
 output_file("olympicdata.html")
