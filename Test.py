@@ -1,4 +1,5 @@
 import pandas as pd
+from math import pi
 
 oo = pd.read_csv('/Users/gretastudier/PycharmProjects/OlympicData/SummerOlympicmedallists1896to2008.csv')
 #add skiprows=4 to pd.read_cvs to skip 4 first rows
@@ -79,9 +80,12 @@ p.add_tools(HoverTool(renderers=[c2], tooltips=[("Years", "@x"),
 #Grid and Labels
 p.grid.grid_line_color = "white"
 p.background_fill_color = "#e2ddd5"
-p.background_fill_alpha = 0.3
+p.background_fill_alpha = 0.35
 p.title.text_font_size = '20px'
 p.add_layout(Title(text="The 1916, 1940, and 1944 Olympic Games were canceled due to World War I and II.", align="center"), "above")
+p.xaxis.major_label_orientation = pi/4
+
+#p.xaxis.axis_label = 'Years'
 
 #Add Label to WW blocks:
 # citation1 = Label(x=60, y=110, x_units='screen', y_units='screen', text_font_size = '15px',
