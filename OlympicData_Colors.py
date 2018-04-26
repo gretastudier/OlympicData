@@ -59,28 +59,29 @@ p = figure(x_range=[1895, 2009], y_range=[-10, 1300], x_axis_label='Year', y_axi
 
 #Filter Data for World War cancellation
 view = CDSView(filters=[IndexFilter([0,1,2,3,4,6,7,8,9,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28])])
-patch1 =p.patch(x=[1912, 1912, 1920, 1920], y=[-10, 1300, 1300, -10], color='black', alpha=0.04, line_width=0)
-patch2 = p.patch(x=[1936, 1936, 1948, 1948], y=[-10, 1300, 1300, -10], color='black', alpha=0.04, line_width=0)
+patch1 =p.patch(x=[1912, 1912, 1920, 1920], y=[-10, 1300, 1300, -10], color='white', alpha=0.22, line_width=0)
+patch2 = p.patch(x=[1936, 1936, 1948, 1948], y=[-10, 1300, 1300, -10], color='white', alpha=0.22, line_width=0)
 p.add_tools(HoverTool(renderers=[patch1], tooltips=[("Year", "@x"),
                                                     ("Cancellation", "World War 1"),]))
 
 #Women
 y = oo_Year_Gender.Women
-p.line(x=x, y=y, line_width=3, color = "navy", alpha=0.4, legend="Womens Medal Count", view=view)
-c1 = p.circle(x=x, y=y, color='navy', fill_color="white", size=6, legend="Womens Medal Count", view=view)
+p.line(x=x, y=y, line_width=3, color = "#cc99ff", alpha=0.5, legend="Womens Medal Count", view=view)
+c1 = p.circle(x=x, y=y, color='#cc99ff', fill_color="#cc99ff", size=6, legend="Womens Medal Count", view=view)
 p.add_tools(HoverTool(renderers=[c1], tooltips=[("Years", "@x"),
                                                  ("Women", "@y"),]))
 # #Men
 y = oo_Year_Gender.Men
-p.line(x=x, y=y,  line_width=3, color = "green", alpha=0.4, legend="Mens Medal Count", view=view)
-c2 = p.circle(x=x, y=y,  color='green', fill_color="white", size=6, legend="Mens Medal Count", view=view)
+p.line(x=x, y=y,  line_width=3, color = "#33cc33", alpha=0.5, legend="Mens Medal Count", view=view)
+c2 = p.circle(x=x, y=y,  color='#33cc33', fill_color="#33cc33", size=6, legend="Mens Medal Count", view=view)
 p.add_tools(HoverTool(renderers=[c2], tooltips=[("Years", "@x"),
                                                 ("Men", "@y"),]))
 
 #Grid and Labels
-p.grid.grid_line_color = "white"
-p.background_fill_color = "#e2ddd5"
-p.background_fill_alpha = 0.35
+p.grid.grid_line_color = "#808080"
+
+p.background_fill_color = "#404040"
+p.background_fill_alpha = 0.95
 p.title.text_font_size = '20px'
 p.add_layout(Title(text="The 1916, 1940, and 1944 Olympic Games were canceled due to World War I and II.", align="center"), "above")
 p.xaxis.major_label_orientation = pi/4
